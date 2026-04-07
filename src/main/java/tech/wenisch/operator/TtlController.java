@@ -17,7 +17,6 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jboss.logging.Logger;
 
 import java.time.Instant;
-import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -26,8 +25,14 @@ import java.util.Optional;
  * Core controller that periodically scans all Kubernetes resource types for the
  * {@code wenisch.tech/ttl} annotation and deletes resources whose TTL has expired.
  *
- * <p>The annotation value must be a UTC timestamp in ISO-8601 format, e.g.:
- * {@code wenisch.tech/ttl: "2024-12-31T23:59:59Z"}
+ * <p>The annotation value may be either:
+ * <ul>
+ *   <li>an ISO-8601 UTC timestamp, e.g. {@code 2024-12-31T23:59:59Z}, or</li>
+ *   <li>a Unix epoch timestamp in seconds, e.g. {@code 1775666164}</li>
+ * </ul>
+ *
+ * <p>If the value cannot be parsed in either format, an error is logged and the
+ * resource is left untouched.
  *
  * <p>The controller runs on a configurable interval (default: every 60 seconds) and
  * covers the following resource categories:
@@ -440,23 +445,46 @@ public class TtlController {
     }
 
     /**
-     * Parses an ISO-8601 UTC timestamp from a TTL annotation value.
+     * Parses a TTL annotation value into an {@link Instant}.
+     *
+     * <p>Two formats are accepted (leading/trailing whitespace is ignored):
+     * <ol>
+     *   <li><b>ISO-8601 UTC</b> — e.g. {@code 2024-12-31T23:59:59Z}</li>
+     *   <li><b>Unix epoch seconds</b> — e.g. {@code 1775666164}</li>
+     * </ol>
+     *
+     * <p>If the value cannot be parsed in either format an error is logged and
+     * {@link Optional#empty()} is returned so the resource is left untouched.
      *
      * @param value    the raw annotation value
      * @param resource the resource owning the annotation (used for log context)
      * @return an {@link Optional} containing the parsed instant, or empty if invalid
      */
     Optional<Instant> parseTtl(String value, HasMetadata resource) {
+        String trimmed = value.trim();
+
+        // 1. Try ISO-8601 first (e.g. "2024-12-31T23:59:59Z")
         try {
-            return Optional.of(Instant.parse(value.trim()));
-        } catch (DateTimeParseException e) {
-            LOG.warnf("Invalid %s annotation value '%s' on %s/%s: %s",
-                    TTL_ANNOTATION, value,
-                    resource.getMetadata().getNamespace(),
-                    resource.getMetadata().getName(),
-                    e.getMessage());
-            return Optional.empty();
+            return Optional.of(Instant.parse(trimmed));
+        } catch (Exception ignored) {
+            // fall through to epoch parsing
         }
+
+        // 2. Try Unix epoch seconds (e.g. "1775666164")
+        try {
+            long epochSeconds = Long.parseLong(trimmed);
+            return Optional.of(Instant.ofEpochSecond(epochSeconds));
+        } catch (NumberFormatException ignored) {
+            // fall through to error
+        }
+
+        LOG.errorf("Cannot parse %s annotation value '%s' on %s/%s: " +
+                        "expected an ISO-8601 UTC timestamp (e.g. 2024-12-31T23:59:59Z) " +
+                        "or a Unix epoch in seconds (e.g. 1775666164)",
+                TTL_ANNOTATION, value,
+                resource.getMetadata().getNamespace(),
+                resource.getMetadata().getName());
+        return Optional.empty();
     }
 
     private void handleError(String resourceType, Exception e) {

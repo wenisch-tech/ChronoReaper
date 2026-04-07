@@ -70,6 +70,31 @@ class TtlControllerTest {
         assertThat(result).isPresent();
     }
 
+    @Test
+    void parseTtl_unixEpochSeconds_returnsInstant() {
+        long epochSeconds = 1775666164L;
+        Pod pod = podWithAnnotation(String.valueOf(epochSeconds));
+        Optional<Instant> result = controller.parseTtl(String.valueOf(epochSeconds), pod);
+        assertThat(result).isPresent();
+        assertThat(result.get()).isEqualTo(Instant.ofEpochSecond(epochSeconds));
+    }
+
+    @Test
+    void parseTtl_unixEpochWithWhitespace_returnsInstant() {
+        Pod pod = podWithAnnotation("  1775666164  ");
+        Optional<Instant> result = controller.parseTtl("  1775666164  ", pod);
+        assertThat(result).isPresent();
+        assertThat(result.get()).isEqualTo(Instant.ofEpochSecond(1775666164L));
+    }
+
+    @Test
+    void parseTtl_epochZero_returnsEpochInstant() {
+        Pod pod = podWithAnnotation("0");
+        Optional<Instant> result = controller.parseTtl("0", pod);
+        assertThat(result).isPresent();
+        assertThat(result.get()).isEqualTo(Instant.EPOCH);
+    }
+
     // -------------------------------------------------------------------------
     // maybeDelete tests
     // -------------------------------------------------------------------------
@@ -135,6 +160,30 @@ class TtlControllerTest {
     @Test
     void maybeDelete_invalidTimestamp_doesNotDelete() {
         Pod pod = podWithAnnotation("bad-value");
+
+        Runnable deleteAction = mock(Runnable.class);
+        controller.maybeDelete(pod, deleteAction);
+
+        verifyNoInteractions(deleteAction);
+    }
+
+    @Test
+    void maybeDelete_expiredEpochTimestamp_invokesDelete() {
+        // A Unix epoch timestamp well in the past (2001-01-01)
+        String pastEpoch = "978307200";
+        Pod pod = podWithAnnotation(pastEpoch);
+
+        Runnable deleteAction = mock(Runnable.class);
+        controller.maybeDelete(pod, deleteAction);
+
+        verify(deleteAction, times(1)).run();
+    }
+
+    @Test
+    void maybeDelete_futureEpochTimestamp_doesNotDelete() {
+        // One year from now as Unix epoch
+        long futureEpoch = Instant.now().plusSeconds(365L * 24 * 3600).getEpochSecond();
+        Pod pod = podWithAnnotation(String.valueOf(futureEpoch));
 
         Runnable deleteAction = mock(Runnable.class);
         controller.maybeDelete(pod, deleteAction);
