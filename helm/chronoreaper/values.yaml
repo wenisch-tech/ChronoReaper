@@ -3,7 +3,7 @@
 replicaCount: 1
 
 image:
-  repository: wenisch-tech/chronoreaper
+  repository: ghcr.io/wenisch-tech/chronoreaper
   pullPolicy: IfNotPresent
   tag: 
 

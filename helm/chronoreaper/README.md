@@ -39,7 +39,7 @@ Key values from `values.yaml`:
 | Key | Type | Default | Description |
 |---|---|---|---|
 | `replicaCount` | int | `1` | Number of operator replicas |
-| `image.repository` | string | `wenisch-tech/chronoreaper` | Operator image repository |
+| `image.repository` | string | `ghcr.io/wenisch-tech/chronoreaper` | Operator image repository |
 | `image.tag` | string | `""` | Image tag (falls back to chart `appVersion`) |
 | `image.pullPolicy` | string | `IfNotPresent` | Image pull policy |
 | `operator.checkInterval` | string | `60s` | TTL scan interval |
