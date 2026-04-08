@@ -16,3 +16,6 @@ Thumbs.db
 
 # Quarkus
 .quarkus/
+
+# Versioned OLM bundles (generated at CI time, published to wenisch-tech/operators)
+bundle/chronoreaper/
