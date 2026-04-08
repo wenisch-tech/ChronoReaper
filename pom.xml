@@ -7,7 +7,7 @@
 
   <groupId>tech.wenisch</groupId>
   <artifactId>chrono-reaper</artifactId>
-  <version>0.0.6</version>
+  <version>0.1.0</version>
   <packaging>jar</packaging>
 
   <name>chrono-reaper</name>
