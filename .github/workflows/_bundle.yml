@@ -78,6 +78,17 @@ jobs:
             yq eval 'del(.spec.replaces)' -i "$dest_csv"
           fi
 
+      - name: Set up Operator SDK
+        uses: operator-framework/operator-sdk-github-action@v1
+        with:
+          version: v1.34.0
+
+      - name: Validate bundle
+        shell: bash
+        run: |
+          set -euo pipefail
+          operator-sdk bundle validate ./bundle
+
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
         with:
