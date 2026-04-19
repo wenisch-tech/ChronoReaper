@@ -1,5 +1,19 @@
 # Changelog
 
+## v1.1.2 - 2026-04-19
+
+### [1.1.2](https://github.com/wenisch-tech/ChronoReaper/compare/v1.1.1...v1.1.2) (2026-04-19)
+
+
+### Bug Fixes
+
+* updated annotations in bundle and addes bundle-test for ci ([b22b5b6](https://github.com/wenisch-tech/ChronoReaper/commit/b22b5b65c0baaf756d8521a1b6b4baa448b1f993))
+
+
+
+Docker image: ghcr.io/wenisch-tech/chronoreaper:1.1.2
+
+
 ## v1.1.1 - 2026-04-08
 
 ### [1.1.1](https://github.com/wenisch-tech/ChronoReaper/compare/v1.1.0...v1.1.1) (2026-04-08)
