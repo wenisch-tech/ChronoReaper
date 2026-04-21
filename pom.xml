@@ -32,7 +32,7 @@
     <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
     <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
     <quarkus.platform.version>3.34.2</quarkus.platform.version>
-    <quarkiverse.operator-sdk.version>7.7.3</quarkiverse.operator-sdk.version>
+    <quarkiverse.operator-sdk.version>7.7.4</quarkiverse.operator-sdk.version>
   </properties>
 
   <dependencyManagement>
