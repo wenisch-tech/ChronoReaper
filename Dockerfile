@@ -1,7 +1,7 @@
 ####
 # Stage 1 – build the application
 ####
-FROM maven:3.9-eclipse-temurin-17 AS builder
+FROM maven:3.9-eclipse-temurin-17@sha256:32ce79e40d744b18c6ce9fe65d6b58189cbabc938cfeff657a534a359a5d3f92 AS builder
 
 WORKDIR /build
 COPY pom.xml .
@@ -13,7 +13,7 @@ RUN mvn package -DskipTests -q
 ####
 # Stage 2 – runtime image
 ####
-FROM eclipse-temurin:17-jre-alpine
+FROM eclipse-temurin:17-jre-alpine@sha256:b0ae54a36f82e04dc6c45e40ca5c55762e20b9a0858ee457faf557d440a9b571
 
 # Non-root user for security
 RUN addgroup -S operator && adduser -S operator -G operator
