@@ -1,5 +1,19 @@
 # Changelog
 
+## v1.1.7 - 2026-05-31
+
+### [1.1.7](https://github.com/wenisch-tech/ChronoReaper/compare/v1.1.6...v1.1.7) (2026-05-31)
+
+
+### Bug Fixes
+
+* removed dependabot ([34c4c30](https://github.com/wenisch-tech/ChronoReaper/commit/34c4c30b5f4f135a7d032b1cef4028e0e7692375))
+
+
+
+Docker image: ghcr.io/wenisch-tech/chronoreaper:1.1.7
+
+
 ## v1.1.4 - 2026-05-31
 
 ### [1.1.4](https://github.com/wenisch-tech/ChronoReaper/compare/v1.1.3...v1.1.4) (2026-05-31)
