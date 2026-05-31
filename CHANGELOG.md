@@ -1,5 +1,19 @@
 # Changelog
 
+## v1.1.3 - 2026-05-31
+
+### [1.1.3](https://github.com/wenisch-tech/ChronoReaper/compare/v1.1.2...v1.1.3) (2026-05-31)
+
+
+### Bug Fixes
+
+* Add renovate.json ([#27](https://github.com/wenisch-tech/ChronoReaper/issues/27)) ([0b11e7b](https://github.com/wenisch-tech/ChronoReaper/commit/0b11e7bc7037340e598993199a1d28fc974b91aa))
+
+
+
+Docker image: ghcr.io/wenisch-tech/chronoreaper:1.1.3
+
+
 ## v1.1.2 - 2026-04-19
 
 ### [1.1.2](https://github.com/wenisch-tech/ChronoReaper/compare/v1.1.1...v1.1.2) (2026-04-19)
