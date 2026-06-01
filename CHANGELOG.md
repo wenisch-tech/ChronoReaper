@@ -1,5 +1,14 @@
 # Changelog
 
+## v1.1.10 - 2026-06-01
+
+### [1.1.10](https://github.com/wenisch-tech/ChronoReaper/compare/v1.1.9...v1.1.10) (2026-06-01)
+
+
+
+Docker image: ghcr.io/wenisch-tech/chronoreaper:1.1.10
+
+
 ## v1.1.7 - 2026-05-31
 
 ### [1.1.7](https://github.com/wenisch-tech/ChronoReaper/compare/v1.1.6...v1.1.7) (2026-05-31)
