@@ -1,7 +1,7 @@
 ####
 # Stage 1 – build the application
 ####
-FROM maven:3.9-eclipse-temurin-17@sha256:32ce79e40d744b18c6ce9fe65d6b58189cbabc938cfeff657a534a359a5d3f92 AS builder
+FROM maven:3.9-eclipse-temurin-17@sha256:e8ef73dbd33b69fe497fd96b3bbbd85aff84ac4c564a5784ab02ad941b32c12b AS builder
 
 WORKDIR /build
 COPY pom.xml .
