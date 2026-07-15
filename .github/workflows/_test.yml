@@ -40,7 +40,7 @@ jobs:
 
       - name: Publish JUnit report
         if: always()
-        uses: dorny/test-reporter@3eeb9fc888e82e8be2fb356bbeec2750231672bc # v1
+        uses: dorny/test-reporter@a43b3a5f7366b97d083190328d2c652e1a8b6aa2 # v3
         with:
           name: Maven Tests
           path: target/surefire-reports/*.xml
