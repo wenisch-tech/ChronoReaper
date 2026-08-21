@@ -13,7 +13,7 @@ RUN mvn package -DskipTests -q
 ####
 # Stage 2 – runtime image
 ####
-FROM eclipse-temurin:17.0.19_10-jre-alpine@sha256:b0ae54a36f82e04dc6c45e40ca5c55762e20b9a0858ee457faf557d440a9b571
+FROM eclipse-temurin:25.0.4_7-jre-alpine@sha256:3137541deb3cac6626b5d9a4a2187bc0d6a34312f858bd2c67dd01e732e6b682
 
 # Non-root user for security
 RUN addgroup -S operator && adduser -S operator -G operator
